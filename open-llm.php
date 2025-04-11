@@ -37,7 +37,7 @@ if (is_admin()) {
  * @see https://developer.wordpress.org/reference/functions/register_block_type/
  */
 function create_block_wp_llm_block_init() {
-	register_block_type( __DIR__ . '/build/wp-llm' );
+	register_block_type( __DIR__ . '/build/open_llm' );
 }
 add_action( 'init', 'create_block_wp_llm_block_init' );
 
