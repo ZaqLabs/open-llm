@@ -24,57 +24,61 @@ import { marked } from 'marked';
 console.log( 'Hello World! (from create-block-wp-llm block)' );
 /* eslint-enable no-console */
 
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.querySelector('form#wp-llm-form');
-    const textarea = document.getElementById('wp-llm-textarea');
-    const processing = document.querySelector('#wp-llm-loading');
+document.addEventListener( 'DOMContentLoaded', function () {
+	const form = document.querySelector( 'form#wp-llm-form' );
+	const textarea = document.getElementById( 'wp-llm-textarea' );
+	const processing = document.querySelector( '#wp-llm-loading' );
 
-    let errorOccurred  = false;
+	let errorOccurred = false;
 
-    if (form && textarea) {
-        form.addEventListener('submit', async function(event) {
-            event.preventDefault();
-            
-            const message = textarea.value.trim();
-            if (!message) return;
-            processing.style.display = 'block';
+	if ( form && textarea ) {
+		form.addEventListener( 'submit', async function ( event ) {
+			event.preventDefault();
 
-            try {
-                const response = await fetch('/wp-json/wp-llm/v1/chat', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-WP-Nonce': wpApiSettings.nonce
-                    },
-                    body: JSON.stringify({ message })
-                });
-                
-                const data = await response.json();
-                if (data.status === 'success') {
-                    const responseP = document.createElement('p');
-                    const requestP = document.createElement('p');
-                    requestP.style.color = 'red';
-                    requestP.textContent = textarea.value;
-                    responseP.innerHTML = marked.parse(data.message);
-                    textarea.parentNode.insertBefore(requestP, textarea);
-                    textarea.parentNode.insertBefore(responseP, textarea);
-                    textarea.value = '';
-                    
-                } else {
-                    console.error('Error:', data.message);
-                    processing.innerHTML = data.message;
-                    errorOccurred = true
-                }
-            } catch (error) {
-                console.error('Error:->', error);
-                processing.innerHTML = error.message || String(error);
-                errorOccurred = true
-            } finally {
-                if (!errorOccurred) {
-                    processing.style.display = 'none';
-                }
-                errorOccurred = false;
-            }
-        });
-    }
-});
+			const message = textarea.value.trim();
+			if ( ! message ) return;
+			processing.style.display = 'block';
+			processing.innerHTML = 'Processing...';
+
+			try {
+				const response = await fetch( '/wp-json/wp-llm/v1/chat', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						'X-WP-Nonce': wpApiSettings.nonce,
+					},
+					body: JSON.stringify( { message } ),
+				} );
+
+				const data = await response.json();
+				if ( data.status === 'success' ) {
+					const responseP = document.createElement( 'p' );
+					const requestP = document.createElement( 'p' );
+					requestP.style.color = 'red';
+					requestP.textContent = textarea.value;
+					responseP.innerHTML = marked.parse( data.message );
+					textarea.parentNode.insertBefore( requestP, textarea );
+					textarea.parentNode.insertBefore( responseP, textarea );
+					textarea.value = '';
+				} else {
+					console.error( 'Error:', data );
+					processing.innerHTML = data.message;
+					errorOccurred = true;
+				}
+			} catch ( error ) {
+				console.error( 'Error:->', error.message );
+				processing.innerHTML = error.message || String( error );
+				if ( error instanceof SyntaxError ) {
+					processing.innerHTML +=
+						"<br> <span class='z-error'>Please, ensure this site is using permalink.</span>";
+				}
+				errorOccurred = true;
+			} finally {
+				if ( ! errorOccurred ) {
+					processing.style.display = 'none';
+				}
+				errorOccurred = false;
+			}
+		} );
+	}
+} );

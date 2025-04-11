@@ -31,44 +31,47 @@ import './editor.scss';
  *
  * @return {Element} Element to render.
  */
-export default function Edit({ attributes, setAttributes }) {
+export default function Edit( { attributes, setAttributes } ) {
 	// const [placeholder, setPlaceholder] = useState('Insert Placeholder');
-	const {title, placeholder, showTitle} = attributes;
+	const { title, placeholder, showTitle } = attributes;
 	return (
 		<>
 			<InspectorControls>
 				<PanelBody title={ __( 'Settings', 'wp-llm' ) }>
 					<ToggleControl
 						checked={ !! showTitle }
-						label={ __(
-							'Show title',
-							'wp-llm'
-						) }
+						label={ __( 'Show title', 'wp-llm' ) }
 						onChange={ () =>
 							setAttributes( {
 								showTitle: ! showTitle,
 							} )
 						}
 					/>
-                    { showTitle && <TextControl
-                        __nextHasNoMarginBottom
-						__next40pxDefaultSize
-                        label={ __( 'Title', 'wp-llm' ) }
-                        value={ title }
-                        onChange={ ( value ) => setAttributes( { title: value } ) }
-                    /> }
+					{ showTitle && (
+						<TextControl
+							__nextHasNoMarginBottom
+							__next40pxDefaultSize
+							label={ __( 'Title', 'wp-llm' ) }
+							value={ title }
+							onChange={ ( value ) =>
+								setAttributes( { title: value } )
+							}
+						/>
+					) }
 					<TextControl
-                        __nextHasNoMarginBottom
+						__nextHasNoMarginBottom
 						__next40pxDefaultSize
-                        label={ __( 'Placeholder', 'wp-llm' ) }
-                        value={ placeholder }
-                        onChange={ ( value ) => setAttributes( { placeholder: value } ) }
-                    />
-                </PanelBody>
-            </InspectorControls>
-			{showTitle && <p>{title}</p>}
+						label={ __( 'Placeholder', 'wp-llm' ) }
+						value={ placeholder }
+						onChange={ ( value ) =>
+							setAttributes( { placeholder: value } )
+						}
+					/>
+				</PanelBody>
+			</InspectorControls>
+			{ showTitle && <p>{ title }</p> }
 			<p { ...useBlockProps() }>{ __( placeholder, 'wp-llm' ) }</p>
-			{/* <p><input { ...useBlockProps() } className='wp-llm-input' type="text" /></p> */}
+			{ /* <p><input { ...useBlockProps() } className='wp-llm-input' type="text" /></p> */ }
 		</>
 	);
 }
