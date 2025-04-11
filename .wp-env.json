@@ -1,7 +1,7 @@
 {
     "core": null,
     "plugins": [
-        "./open-llm.zip",
+        "http://127.0.0.1:9999/open-llm.zip",
         "WordPress/plugin-check"
     ],
     "config": {
