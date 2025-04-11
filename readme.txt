@@ -1,4 +1,4 @@
-=== WP LLM ===
+=== Open LLM ===
 Contributors:      zaql
 Tags:              openai, block, ai, gutenberg
 Tested up to:      6.7

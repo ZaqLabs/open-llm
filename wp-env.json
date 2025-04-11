@@ -1,0 +1,18 @@
+{
+    "core": null,
+    "plugins": [
+        "./wp-llm.zip"
+    ],
+    "config": {
+        "WP_DEBUG": true,
+        "SCRIPT_DEBUG": true
+    },
+    "env": {
+        "tests": {
+            "port": 8889
+        },
+        "development": {
+            "port": 8888
+        }
+    }
+}

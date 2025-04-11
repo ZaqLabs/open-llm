@@ -13,8 +13,8 @@ class WP_LLM_Settings {
 
     public function add_plugin_page() {
         add_menu_page(
-            'WP LLM Settings',
-            'WP LLM',
+            'Open LLM Settings',
+            'Open LLM',
             'manage_options',
             'wp-llm-settings',
             array($this, 'create_admin_page'),
@@ -128,7 +128,7 @@ class WP_LLM_Settings {
                 Allow non-logged-in users to access the chat
             </label>
             <p class="description">Warning: Enabling guest access may increase API usage.</p>',
-            $checked
+            esc_attr($checked)
         );
     }
 
@@ -145,7 +145,7 @@ class WP_LLM_Settings {
                         value="%s" %s> %s
                 </label>',
                 esc_attr($role_id),
-                $checked,
+                esc_attr($checked),
                 esc_html($role_name)
             );
         }
