@@ -1,7 +1,8 @@
 {
     "core": null,
     "plugins": [
-        "./wp-llm.zip"
+        "./open-llm.zip",
+        "WordPress/plugin-check"
     ],
     "config": {
         "WP_DEBUG": true,
