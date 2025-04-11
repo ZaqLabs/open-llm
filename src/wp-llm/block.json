@@ -1,0 +1,42 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "wp-llm/wp-llm",
+	"version": "1.0",
+	"title": "Wp LLM",
+	"category": "widgets",
+	"icon": "cloud",
+	"description": "Add LLM Chat to your WordPress site",
+	"example": {},
+	"attributes": {
+		"placeholder": {
+			"type": "string",
+			"default": "Insert Placeholder"
+		},
+		"title": {
+			"type": "string",
+			"default": "Title"
+		},
+		"showTitle": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"supports": {
+		"html": false,
+		"color": {
+			"background": true,
+			"text": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true
+		}
+	},
+	"textdomain": "wp-llm",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php",
+	"viewScript": "file:./view.js"
+}
