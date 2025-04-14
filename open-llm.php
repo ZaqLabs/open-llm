@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       Open LLM
- * Description:       Add LLM Chat to your WordPress site
+ * Description:       Add LLM Chat to your WordPress site.
  * Version:           0.1.0
  * Requires at least: 6.7
  * Requires PHP:      7.4
@@ -159,5 +159,17 @@ function wp_llm_check_permission() {
     
     return false;
 }
+
+/**
+ * Add settings link to plugin listing
+ */
+function wp_llm_add_settings_link($links) {
+    $settings_link = '<a href="' . admin_url('admin.php?page=wp-llm-settings') . '">' . __('Settings', 'open-llm') . '</a>';
+    array_unshift($links, $settings_link);
+    return $links;
+}
+
+// Add filter for plugin action links
+add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'wp_llm_add_settings_link');
 
 
