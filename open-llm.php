@@ -22,11 +22,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once ABSPATH . 'wp-includes/rest-api.php';
 
 // Include settings page
-require_once plugin_dir_path(__FILE__) . 'admin/class-wp-llm-settings.php';
+require_once plugin_dir_path(__FILE__) . 'admin/class-open-llm-settings.php';
 
 // Initialize settings
 if (is_admin()) {
-    new WP_LLM_Settings();
+    new OPEN_LLM_Settings();
 }
 
 /**
@@ -36,22 +36,22 @@ if (is_admin()) {
  *
  * @see https://developer.wordpress.org/reference/functions/register_block_type/
  */
-function create_block_wp_llm_block_init() {
+function create_block_open_llm_block_init() {
 	register_block_type( __DIR__ . '/build/open-llm' );
 }
-add_action( 'init', 'create_block_wp_llm_block_init' );
+add_action( 'init', 'create_block_open_llm_block_init' );
 
 /**
  * Register REST API endpoints for the LLM chat functionality
  */
-function wp_llm_register_rest_routes() {
+function open_llm_register_rest_routes() {
     register_rest_route(
-        'wp-llm/v1',
+        'open-llm/v1',
         '/chat',
         array(
             'methods'             => 'POST',
-            'callback'           => 'wp_llm_handle_chat_request',
-            'permission_callback' => 'wp_llm_check_permission',
+            'callback'           => 'open_llm_handle_chat_request',
+            'permission_callback' => 'open_llm_check_permission',
             'args'               => array(
                 'message' => array(
                     'required'          => true,
@@ -62,7 +62,7 @@ function wp_llm_register_rest_routes() {
         )
     );
 }
-add_action( 'rest_api_init', 'wp_llm_register_rest_routes' );
+add_action( 'rest_api_init', 'open_llm_register_rest_routes' );
 
 /**
  * Handle chat request and return response
@@ -70,9 +70,9 @@ add_action( 'rest_api_init', 'wp_llm_register_rest_routes' );
  * @param WP_REST_Request $request The request object.
  * @return WP_REST_Response|WP_Error The response object.
  */
-function wp_llm_handle_chat_request($request) {
+function open_llm_handle_chat_request($request) {
     $message = $request->get_param('message');
-    $options = get_option('wp_llm_settings');
+    $options = get_option('open_llm_settings');
 
     $body = json_encode([
         'model' => 'gpt-4o-mini',
@@ -128,19 +128,19 @@ function wp_llm_handle_chat_request($request) {
 /**
  * Enqueue scripts and localize data for the REST API
  */
-function wp_llm_enqueue_scripts() {
+function open_llm_enqueue_scripts() {
     wp_enqueue_script( 'wp-api' );
     wp_localize_script( 'wp-api', 'wpApiSettings', array(
         'nonce' => wp_create_nonce( 'wp_rest' )
     ));
 }
-add_action( 'wp_enqueue_scripts', 'wp_llm_enqueue_scripts' );
+add_action( 'wp_enqueue_scripts', 'open_llm_enqueue_scripts' );
 
 /**
  * Check permission for accessing the chat functionality
  */
-function wp_llm_check_permission() {
-    $options = get_option('wp_llm_settings');
+function open_llm_check_permission() {
+    $options = get_option('open_llm_settings');
     
     // Check for guest access
     if (!is_user_logged_in()) {
@@ -163,13 +163,13 @@ function wp_llm_check_permission() {
 /**
  * Add settings link to plugin listing
  */
-function wp_llm_add_settings_link($links) {
-    $settings_link = '<a href="' . admin_url('admin.php?page=wp-llm-settings') . '">' . __('Settings', 'open-llm') . '</a>';
+function open_llm_add_settings_link($links) {
+    $settings_link = '<a href="' . admin_url('admin.php?page=open-llm-settings') . '">' . __('Settings', 'open-llm') . '</a>';
     array_unshift($links, $settings_link);
     return $links;
 }
 
 // Add filter for plugin action links
-add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'wp_llm_add_settings_link');
+add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'open_llm_add_settings_link');
 
 

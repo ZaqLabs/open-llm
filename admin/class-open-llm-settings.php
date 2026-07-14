@@ -3,7 +3,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class WP_LLM_Settings {
+class OPEN_LLM_Settings {
     private $options;
 
     public function __construct() {
@@ -16,21 +16,22 @@ class WP_LLM_Settings {
             'Open LLM Settings',
             'Open LLM',
             'manage_options',
-            'wp-llm-settings',
+            'open-llm-settings',
             array($this, 'create_admin_page'),
             'dashicons-format-chat'
         );
     }
 
     public function create_admin_page() {
-        $this->options = get_option('wp_llm_settings');
+        $this->options = get_option('open_llm_settings');
         ?>
         <div class="wrap">
             <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
             <form method="post" action="options.php">
                 <?php
-                settings_fields('wp_llm_options');
-                do_settings_sections('wp-llm-settings');
+                settings_fields('open_llm_options');
+                Var_dump($this->options);
+                do_settings_sections('open_llm_settings');
                 submit_button();
                 ?>
             </form>
@@ -40,49 +41,49 @@ class WP_LLM_Settings {
 
     public function page_init() {
         register_setting(
-            'wp_llm_options',
-            'wp_llm_settings',
+            'open_llm_options',
+            'open_llm_settings',
             array($this, 'sanitize')
         );
 
         // API Settings Section
         add_settings_section(
-            'wp_llm_general_section',
+            'open_llm_general_section',
             'API Settings',
             array($this, 'section_info'),
-            'wp-llm-settings'
+            'open_llm_settings'
         );
 
         add_settings_field(
             'api_key',
             'LLM API Key',
             array($this, 'api_key_callback'),
-            'wp-llm-settings',
-            'wp_llm_general_section'
+            'open_llm_settings',
+            'open_llm_general_section'
         );
 
         // Permissions Section
         add_settings_section(
-            'wp_llm_permissions_section',
+            'open_llm_permissions_section',
             'Access Permissions',
             array($this, 'permissions_section_info'),
-            'wp-llm-settings'
+            'open_llm_settings'
         );
 
         add_settings_field(
             'allow_guest',
             'Guest Access',
             array($this, 'allow_guest_callback'),
-            'wp-llm-settings',
-            'wp_llm_permissions_section'
+            'open_llm_settings',
+            'open_llm_permissions_section'
         );
 
         add_settings_field(
             'allowed_roles',
             'Allowed User Roles',
             array($this, 'allowed_roles_callback'),
-            'wp-llm-settings',
-            'wp_llm_permissions_section'
+            'open_llm_settings',
+            'open_llm_permissions_section'
         );
     }
 
@@ -111,7 +112,7 @@ class WP_LLM_Settings {
     public function api_key_callback() {
         $value = isset($this->options['api_key']) ? $this->options['api_key'] : '';
         printf(
-            '<input type="password" id="api_key" name="wp_llm_settings[api_key]" value="%s" class="regular-text">',
+            '<input type="text" id="api_key" name="open_llm_settings[api_key]" value="%s" class="regular-text">',
             esc_attr($value)
         );
     }
@@ -124,7 +125,7 @@ class WP_LLM_Settings {
         $checked = isset($this->options['allow_guest']) && $this->options['allow_guest'] ? 'checked' : '';
         printf(
             '<label>
-                <input type="checkbox" name="wp_llm_settings[allow_guest]" value="1" %s>
+                <input type="checkbox" name="open_llm_settings[allow_guest]" value="1" %s>
                 Allow non-logged-in users to access the chat
             </label>
             <p class="description">Warning: Enabling guest access may increase API usage.</p>',
@@ -141,7 +142,7 @@ class WP_LLM_Settings {
             $checked = in_array($role_id, $saved_roles) ? 'checked' : '';
             printf(
                 '<label style="display: block; margin-bottom: 5px;">
-                    <input type="checkbox" name="wp_llm_settings[allowed_roles][]" 
+                    <input type="checkbox" name="open_llm_settings[allowed_roles][]" 
                         value="%s" %s> %s
                 </label>',
                 esc_attr($role_id),

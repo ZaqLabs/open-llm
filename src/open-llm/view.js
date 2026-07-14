@@ -21,13 +21,13 @@
  */
 import { marked } from 'marked';
 /* eslint-disable no-console */
-console.log( 'Hello World! (from create-block-wp-llm block)' );
+console.log( 'Hello World! (from create-block-open-llm block)' );
 /* eslint-enable no-console */
 
 document.addEventListener( 'DOMContentLoaded', function () {
-	const form = document.querySelector( 'form#wp-llm-form' );
-	const textarea = document.getElementById( 'wp-llm-textarea' );
-	const processing = document.querySelector( '#wp-llm-loading' );
+	const form = document.querySelector( 'form#open-llm-form' );
+	const textarea = document.getElementById( 'open-llm-textarea' );
+	const processing = document.querySelector( '#open-llm-loading' );
 
 	let errorOccurred = false;
 
@@ -41,7 +41,7 @@ document.addEventListener( 'DOMContentLoaded', function () {
 			processing.innerHTML = 'Processing...';
 
 			try {
-				const response = await fetch( '/wp-json/wp-llm/v1/chat', {
+				const response = await fetch( '/wp-json/open-llm/v1/chat', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',

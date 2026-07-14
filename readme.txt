@@ -16,7 +16,7 @@ This is a block plugin that allows you integrate OpenAI into your WordPress Webs
 
 This section describes how to install the plugin and get it working.
 
-1. Upload the plugin files to the `/wp-content/plugins/wp-llm` directory, or install the plugin through the WordPress plugins screen directly.
+1. Upload the plugin files to the `/wp-content/plugins/open-llm` directory, or install the plugin through the WordPress plugins screen directly.
 
 2. Activate the plugin through the 'Plugins' screen in WordPress
 

@@ -1,8 +1,8 @@
 {
     "core": null,
     "plugins": [
-        "http://127.0.0.1:9999/open-llm.zip",
-        "WordPress/plugin-check"
+        ".",
+        "https://downloads.wordpress.org/plugin/plugin-check.zip"
     ],
     "config": {
         "WP_DEBUG": true,

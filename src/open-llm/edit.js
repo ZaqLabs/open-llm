@@ -37,10 +37,10 @@ export default function Edit( { attributes, setAttributes } ) {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={ __( 'Settings', 'wp-llm' ) }>
+				<PanelBody title={ __( 'Settings', 'open-llm' ) }>
 					<ToggleControl
 						checked={ !! showTitle }
-						label={ __( 'Show title', 'wp-llm' ) }
+						label={ __( 'Show title', 'open-llm' ) }
 						onChange={ () =>
 							setAttributes( {
 								showTitle: ! showTitle,
@@ -51,7 +51,7 @@ export default function Edit( { attributes, setAttributes } ) {
 						<TextControl
 							__nextHasNoMarginBottom
 							__next40pxDefaultSize
-							label={ __( 'Title', 'wp-llm' ) }
+							label={ __( 'Title', 'open-llm' ) }
 							value={ title }
 							onChange={ ( value ) =>
 								setAttributes( { title: value } )
@@ -61,7 +61,7 @@ export default function Edit( { attributes, setAttributes } ) {
 					<TextControl
 						__nextHasNoMarginBottom
 						__next40pxDefaultSize
-						label={ __( 'Placeholder', 'wp-llm' ) }
+						label={ __( 'Placeholder', 'open-llm' ) }
 						value={ placeholder }
 						onChange={ ( value ) =>
 							setAttributes( { placeholder: value } )
@@ -70,8 +70,8 @@ export default function Edit( { attributes, setAttributes } ) {
 				</PanelBody>
 			</InspectorControls>
 			{ showTitle && <p>{ title }</p> }
-			<p { ...useBlockProps() }>{ __( placeholder, 'wp-llm' ) }</p>
-			{ /* <p><input { ...useBlockProps() } className='wp-llm-input' type="text" /></p> */ }
+			<p { ...useBlockProps() }>{ __( placeholder, 'open-llm' ) }</p>
+			{ /* <p><input { ...useBlockProps() } className='open-llm-input' type="text" /></p> */ }
 		</>
 	);
 }
